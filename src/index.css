@@ -1,0 +1,85 @@
+@import "tailwindcss";
+@import url("https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@500;700&family=Noto+Sans+JP:wght@400;500;700&display=swap");
+
+:root {
+  color-scheme: light;
+
+  /* Ledger/washi paper chrome (app shell, cards, chrome — not chart marks) */
+  --paper: #eae3d6;
+  --paper-card: #f5f0e6;
+  --ink: #23262b;
+  --ink-soft: #6b6759;
+  --rule: #c9bfa8;
+
+  /* Dataviz-validated chart tokens — keep exact hex, see dataviz skill palette.md */
+  --chart-surface: #fcfcfb;
+  --chart-text-primary: #0b0b0b;
+  --chart-text-secondary: #52514e;
+  --chart-text-muted: #898781;
+  --chart-gridline: #e1e0d9;
+  --chart-baseline: #c3c2b7;
+  --chart-border: rgba(11, 11, 11, 0.1);
+
+  --status-good: #0ca30c;
+  --status-warning: #fab219;
+  --status-serious: #ec835a;
+  --status-critical: #d03b3b;
+
+  --series-1: #2a78d6;
+  --series-2: #eb6834;
+  --series-3: #1baf7a;
+  --series-4: #eda100;
+  --series-5: #e87ba4;
+  --series-6: #008300;
+  --series-7: #4a3aa7;
+  --series-8: #e34948;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+
+    --paper: #16140f;
+    --paper-card: #201c15;
+    --ink: #ece6d8;
+    --ink-soft: #9c9584;
+    --rule: #3a362b;
+
+    --chart-surface: #1a1a19;
+    --chart-text-primary: #ffffff;
+    --chart-text-secondary: #c3c2b7;
+    --chart-text-muted: #898781;
+    --chart-gridline: #2c2c2a;
+    --chart-baseline: #383835;
+    --chart-border: rgba(255, 255, 255, 0.1);
+
+    --series-1: #3987e5;
+    --series-2: #d95926;
+    --series-3: #199e70;
+    --series-4: #c98500;
+    --series-5: #d55181;
+    --series-6: #008300;
+    --series-7: #9085e9;
+    --series-8: #e66767;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: "Noto Sans JP", system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-variant-numeric: normal;
+}
+
+.font-ledger {
+  font-family: "Noto Serif JP", serif;
+}
+
+#root {
+  min-height: 100svh;
+}
