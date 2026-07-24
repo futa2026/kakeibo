@@ -19,9 +19,9 @@ import {
 } from "./utils";
 
 const TABS = [
-  { id: "record", label: "記録" },
-  { id: "summary", label: "集計" },
-  { id: "budget", label: "予算" },
+  { id: "record", label: "記録(기록)" },
+  { id: "summary", label: "集計(집계)" },
+  { id: "budget", label: "予算(예산)" },
 ] as const;
 
 type Tab = (typeof TABS)[number]["id"];
@@ -101,10 +101,10 @@ function App() {
   );
   const budgetRatio = totalBudget > 0 ? expense / totalBudget : null;
   const stamp = useMemo(() => {
-    if (budgetRatio === null) return { text: "未設定", color: "var(--ink-soft)" };
-    if (budgetRatio > 1) return { text: "超過", color: "var(--status-critical)" };
-    if (budgetRatio >= 0.8) return { text: "要注意", color: "var(--status-warning)" };
-    return { text: "順調", color: "var(--series-1)" };
+    if (budgetRatio === null) return { text: "未設定(설정되지 않음)", color: "var(--ink-soft)" };
+    if (budgetRatio > 1) return { text: "超過(초과)", color: "var(--status-critical)" };
+    if (budgetRatio >= 0.8) return { text: "要注意(주의 필요)", color: "var(--status-warning)" };
+    return { text: "順調(순조로움)", color: "var(--series-1)" };
   }, [budgetRatio]);
 
   return (
