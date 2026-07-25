@@ -19,9 +19,9 @@ import {
 } from "./utils";
 
 const TABS = [
-  { id: "record", label: "記録" },
-  { id: "summary", label: "集計" },
-  { id: "budget", label: "予算" },
+  { id: "record", label: "記録(기록)" },
+  { id: "summary", label: "集計(집계)" },
+  { id: "budget", label: "予算(예산)" },
 ] as const;
 
 type Tab = (typeof TABS)[number]["id"];
@@ -101,10 +101,10 @@ function App() {
   );
   const budgetRatio = totalBudget > 0 ? expense / totalBudget : null;
   const stamp = useMemo(() => {
-    if (budgetRatio === null) return { text: "未設定", color: "var(--ink-soft)" };
-    if (budgetRatio > 1) return { text: "超過", color: "var(--status-critical)" };
-    if (budgetRatio >= 0.8) return { text: "要注意", color: "var(--status-warning)" };
-    return { text: "順調", color: "var(--series-1)" };
+    if (budgetRatio === null) return { text: "未設定(설정되지 않음)", color: "var(--ink-soft)" };
+    if (budgetRatio > 1) return { text: "超過(초과)", color: "var(--status-critical)" };
+    if (budgetRatio >= 0.8) return { text: "要注意(주의 필요)", color: "var(--status-warning)" };
+    return { text: "順調(순조로움)", color: "var(--series-1)" };
   }, [budgetRatio]);
 
   return (
@@ -114,7 +114,7 @@ function App() {
           <div className="text-xs tracking-[0.3em]" style={{ color: "var(--ink-soft)" }}>
             KAKEIBO LEDGER
           </div>
-          <h1 className="mt-1 text-3xl font-bold font-ledger">家計簿</h1>
+          <h1 className="mt-1 text-3xl font-bold font-ledger">家計簿(가계부)</h1>
         </div>
         <HankoStamp text={stamp.text} color={stamp.color} />
       </header>
@@ -160,7 +160,7 @@ function App() {
             style={{ borderColor: "var(--rule)", background: "var(--paper-card)" }}
           >
             <h2 className="mb-3 text-sm font-medium" style={{ color: "var(--ink-soft)" }}>
-              カテゴリ別支出
+              カテゴリ別支出(카테고리별 지출)
             </h2>
             <CategoryBarChart data={chartData} fx={fx} />
           </div>
@@ -169,7 +169,7 @@ function App() {
             style={{ borderColor: "var(--rule)", background: "var(--paper-card)" }}
           >
             <h2 className="mb-3 text-sm font-medium" style={{ color: "var(--ink-soft)" }}>
-              月次推移(直近6ヶ月)
+              直近6ヶ月推移(최근 6개월 추이)
             </h2>
             <TrendChart data={trendData} fx={fx} />
           </div>

@@ -9,9 +9,9 @@ interface Props {
 }
 
 function statusFor(ratio: number): { color: string; label: string; icon: string } {
-  if (ratio >= 1) return { color: "var(--status-critical)", label: "超過", icon: "⚠" };
-  if (ratio >= 0.8) return { color: "var(--status-warning)", label: "要注意", icon: "!" };
-  return { color: "var(--status-good)", label: "順調", icon: "✓" };
+  if (ratio >= 1) return { color: "var(--status-critical)", label: "超過(초과)", icon: "⚠" };
+  if (ratio >= 0.8) return { color: "var(--status-warning)", label: "要注意(주의)", icon: "!" };
+  return { color: "var(--status-good)", label: "順調(양호)", icon: "✓" };
 }
 
 export function BudgetPanel({ spentByCategory, fx }: Props) {

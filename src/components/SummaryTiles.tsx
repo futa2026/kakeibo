@@ -10,10 +10,10 @@ interface Props {
 export function SummaryTiles({ income, expense, fx }: Props) {
   const balance = income - expense;
   const tiles = [
-    { label: "収入", value: income, tone: "var(--series-1)" },
-    { label: "支出", value: expense, tone: "var(--status-critical)" },
+    { label: "収入(수입)", value: income, tone: "var(--series-1)" },
+    { label: "支出(지출)", value: expense, tone: "var(--status-critical)" },
     {
-      label: "残高",
+      label: "残高(잔액)",
       value: balance,
       tone: balance >= 0 ? "var(--ink)" : "var(--status-critical)",
     },

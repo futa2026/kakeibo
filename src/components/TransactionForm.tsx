@@ -72,7 +72,7 @@ export function TransactionForm() {
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-5">
         <div className="col-span-1">
           <label className="mb-1 block text-xs" style={{ color: "var(--ink-soft)" }}>
-            日付
+            日付(날짜)
           </label>
           <input
             type="date"
@@ -85,7 +85,7 @@ export function TransactionForm() {
         </div>
         <div className="col-span-1">
           <label className="mb-1 block text-xs" style={{ color: "var(--ink-soft)" }}>
-            金額(₩)
+            ₩金額(금액)
           </label>
           <input
             type="number"
@@ -101,7 +101,7 @@ export function TransactionForm() {
         </div>
         <div className="col-span-1">
           <label className="mb-1 block text-xs" style={{ color: "var(--ink-soft)" }}>
-            カテゴリ
+            カテゴリ(카테고리)
           </label>
           <select
             value={categoryId}
@@ -118,11 +118,11 @@ export function TransactionForm() {
         </div>
         <div className="col-span-1">
           <label className="mb-1 block text-xs" style={{ color: "var(--ink-soft)" }}>
-            メモ
+            メモ(메모)
           </label>
           <input
             type="text"
-            placeholder="任意"
+            placeholder="任意(선택 사항)"
             value={memo}
             onChange={(e) => setMemo(e.target.value)}
             className={inputClass}
@@ -134,7 +134,7 @@ export function TransactionForm() {
           className="col-span-1 self-end rounded-md py-2 text-sm font-medium text-white"
           style={{ background: "var(--series-1)" }}
         >
-          記録する
+          記録(기록)
         </button>
       </div>
     </form>
