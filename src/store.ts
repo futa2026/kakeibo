@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import type { Budgets, FxRate, Transaction } from "./types";
+import { localDateString } from "./utils";
 
 interface KakeiboState {
   transactions: Transaction[];
@@ -35,8 +36,7 @@ export const useKakeiboStore = create<KakeiboState>()(
         set((state) => ({
           budgets: { ...state.budgets, [categoryId]: amount },
         })),
-      setFx: (fx) =>
-        set({ fx, fxFetchedAt: new Date().toISOString().slice(0, 10) }),
+      setFx: (fx) => set({ fx, fxFetchedAt: localDateString() }),
     }),
     { name: "kakeibo-storage" },
   ),

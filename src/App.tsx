@@ -13,6 +13,7 @@ import { useKakeiboStore } from "./store";
 import {
   currentMonth,
   inMonth,
+  localDateString,
   shiftMonth,
   shortMonthLabel,
   sumByCategory,
@@ -51,7 +52,7 @@ function App() {
   }
 
   useEffect(() => {
-    const today = new Date().toISOString().slice(0, 10);
+    const today = localDateString();
     if (!fx || fxFetchedAt !== today) {
       refreshRate();
     }

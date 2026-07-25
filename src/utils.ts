@@ -1,7 +1,14 @@
 import type { Transaction } from "./types";
 
+export function localDateString(d: Date = new Date()): string {
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, "0");
+  const day = String(d.getDate()).padStart(2, "0");
+  return `${y}-${m}-${day}`; // YYYY-MM-DD, local calendar date
+}
+
 export function currentMonth(): string {
-  return new Date().toISOString().slice(0, 7); // YYYY-MM
+  return localDateString().slice(0, 7); // YYYY-MM
 }
 
 export function inMonth(t: Transaction, month: string): boolean {
