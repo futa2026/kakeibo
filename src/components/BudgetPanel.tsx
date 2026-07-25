@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { EXPENSE_CATEGORIES } from "../constants";
 import { useKakeiboStore } from "../store";
 import type { FxRate } from "../types";
@@ -17,94 +18,98 @@ function statusFor(ratio: number): { color: string; label: string; icon: string 
 export function BudgetPanel({ spentByCategory, fx }: Props) {
   const budgets = useKakeiboStore((s) => s.budgets);
   const setBudget = useKakeiboStore((s) => s.setBudget);
+  const [showSettings, setShowSettings] = useState(false);
+
+  const activeBudgets = EXPENSE_CATEGORIES.filter((c) => (budgets[c.id] ?? 0) > 0);
 
   return (
-    <div className="space-y-3">
-      {EXPENSE_CATEGORIES.map((category) => {
-        const budget = budgets[category.id] ?? 0;
-        const spent = spentByCategory[category.id] ?? 0;
-        const ratio = budget > 0 ? spent / budget : 0;
-        const status = budget > 0 ? statusFor(ratio) : null;
-        const fillPct = Math.min(ratio, 1) * 100;
+    <div>
+      <div className="mb-3 flex items-center justify-between">
+        <span className="text-xs" style={{ color: "var(--ink-soft)" }}>
+          カテゴリごとの月次上限(카테고리별 월 한도)
+        </span>
+        <button type="button" onClick={() => setShowSettings((s) => !s)} className="link-btn">
+          {showSettings ? "閉じる" : "予算を設定"}
+        </button>
+      </div>
 
-        return (
-          <div
-            key={category.id}
-            className="rounded-xl border p-3"
-            style={{ borderColor: "var(--rule)", background: "var(--paper-card)" }}
-          >
-            <div className="flex items-center justify-between gap-3">
-              <div className="flex items-center gap-2">
-                <span
-                  className="h-2.5 w-2.5 rounded-full"
-                  style={{ background: category.color }}
-                  aria-hidden
-                />
-                <span className="text-sm font-medium">{category.label}</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="text-xs" style={{ color: "var(--ink-soft)" }}>
-                  予算(₩)
-                </span>
-                <input
-                  type="text"
-                  min="0"
-                  inputMode="numeric"
-                  value={budget || ""}
-                  placeholder="未設定"
-                  onChange={(e) => setBudget(category.id, Number(e.target.value) || 0)}
-                  className="w-28 rounded-md border px-2 py-1 text-right text-xs tabular-nums outline-none"
-                  style={{
-                    borderColor: "var(--rule)",
-                    background: "var(--paper)",
-                    color: "var(--ink)",
-                  }}
-                />
-              </div>
-            </div>
+      {showSettings && (
+        <div
+          className="mb-4 grid grid-cols-2 gap-3 border-b pb-4 sm:grid-cols-3"
+          style={{ borderColor: "var(--rule)" }}
+        >
+          {EXPENSE_CATEGORIES.map((category) => (
+            <label key={category.id} className="flex flex-col gap-1 text-sm">
+              <span style={{ color: "var(--ink-soft)" }}>{category.label}</span>
+              <input
+                type="text"
+                inputMode="numeric"
+                placeholder="₩0"
+                value={budgets[category.id] || ""}
+                onChange={(e) => setBudget(category.id, Number(e.target.value) || 0)}
+                className="ledger-input"
+              />
+            </label>
+          ))}
+        </div>
+      )}
 
-            {budget > 0 ? (
-              <div className="mt-2">
+      {activeBudgets.length === 0 ? (
+        <p className="text-sm" style={{ color: "var(--ink-soft)" }}>
+          まだ予算が設定されていません。上のボタンから月ごとの上限を入力してください。
+        </p>
+      ) : (
+        <div className="flex flex-col gap-3">
+          {activeBudgets.map((category) => {
+            const budget = budgets[category.id];
+            const spent = spentByCategory[category.id] ?? 0;
+            const ratio = spent / budget;
+            const status = statusFor(ratio);
+            const fillPct = Math.min(ratio, 1) * 100;
+
+            return (
+              <div key={category.id}>
+                <div className="mb-1 flex items-baseline justify-between text-sm">
+                  <span className="flex items-center gap-2">
+                    <span
+                      className="h-2.5 w-2.5 rounded-full"
+                      style={{ background: category.color }}
+                      aria-hidden
+                    />
+                    {category.label}
+                  </span>
+                  <span className="text-right tabular-nums" style={{ color: "var(--ink-soft)" }}>
+                    <div>
+                      {formatWon(spent)} / {formatWon(budget)}
+                    </div>
+                    {fx && (
+                      <div className="text-xs">
+                        {formatYen(spent * fx.rate)} / {formatYen(budget * fx.rate)}
+                      </div>
+                    )}
+                  </span>
+                </div>
                 <div
                   className="h-2 w-full overflow-hidden rounded-full"
                   style={{ background: "var(--rule)" }}
                 >
                   <div
                     className="h-full rounded-full transition-[width]"
-                    style={{ width: `${fillPct}%`, background: status!.color }}
+                    style={{ width: `${fillPct}%`, background: status.color }}
                   />
                 </div>
-                <div className="mt-1 flex items-center justify-between text-xs">
-                  <span
-                    className="flex items-center gap-1 font-medium"
-                    style={{ color: status!.color }}
-                  >
-                    <span aria-hidden>{status!.icon}</span>
-                    {status!.label}
-                  </span>
-                  <span className="text-right tabular-nums" style={{ color: "var(--ink-soft)" }}>
-                    <div>
-                      {formatWon(spent)} / {formatWon(budget)} ({Math.round(ratio * 100)}%)
-                    </div>
-                    {fx && (
-                      <div>
-                        {formatYen(spent * fx.rate)} / {formatYen(budget * fx.rate)}
-                      </div>
-                    )}
-                  </span>
+                <div
+                  className="mt-1 flex items-center gap-1 text-xs font-medium"
+                  style={{ color: status.color }}
+                >
+                  <span aria-hidden>{status.icon}</span>
+                  {status.label}({Math.round(ratio * 100)}%)
                 </div>
               </div>
-            ) : (
-              spent > 0 && (
-                <p className="mt-2 text-xs tabular-nums" style={{ color: "var(--ink-soft)" }}>
-                  今月の支出: {formatWon(spent)}
-                  {fx && `(${formatYen(spent * fx.rate)})`}
-                </p>
-              )
-            )}
-          </div>
-        );
-      })}
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 }

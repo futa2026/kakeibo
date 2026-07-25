@@ -1,13 +1,10 @@
 import {
-  Bar,
-  BarChart,
   Cell,
-  CartesianGrid,
-  LabelList,
+  Legend,
+  Pie,
+  PieChart,
   ResponsiveContainer,
   Tooltip,
-  XAxis,
-  YAxis,
 } from "recharts";
 import { getCategory } from "../constants";
 import type { FxRate } from "../types";
@@ -46,11 +43,7 @@ function CustomTooltip({
       }}
     >
       <div className="flex items-center gap-1.5">
-        <span
-          className="h-2 w-2 rounded-full"
-          style={{ background: d.color }}
-          aria-hidden
-        />
+        <span className="h-2 w-2 rounded-full" style={{ background: d.color }} aria-hidden />
         <span style={{ color: "var(--chart-text-secondary)" }}>{d.label}</span>
       </div>
       <div className="mt-0.5 font-medium tabular-nums">{formatWon(d.amount)}</div>
@@ -63,7 +56,7 @@ function CustomTooltip({
   );
 }
 
-export function CategoryBarChart({ data, fx }: Props) {
+export function CategoryPieChart({ data, fx }: Props) {
   const chartData: Datum[] = data
     .map((d) => {
       const category = getCategory(d.categoryId);
@@ -84,52 +77,29 @@ export function CategoryBarChart({ data, fx }: Props) {
     );
   }
 
-  const height = Math.max(chartData.length * 40, 120);
-
   return (
-    <ResponsiveContainer width="100%" height={height}>
-      <BarChart
-        data={chartData}
-        layout="vertical"
-        margin={{ top: 4, right: 64, left: 8, bottom: 4 }}
-        barCategoryGap={2}
-      >
-        <CartesianGrid
-          horizontal={false}
-          stroke="var(--chart-gridline)"
-          strokeDasharray="0"
-        />
-        <XAxis
-          type="number"
-          tick={{ fill: "var(--chart-text-muted)", fontSize: 11 }}
-          tickFormatter={(v: number) => formatWon(v)}
-          axisLine={{ stroke: "var(--chart-baseline)" }}
-          tickLine={false}
-        />
-        <YAxis
-          type="category"
-          dataKey="label"
-          tick={{ fill: "var(--chart-text-secondary)", fontSize: 12 }}
-          axisLine={false}
-          tickLine={false}
-          width={64}
-        />
-        <Tooltip
-          content={<CustomTooltip fx={fx} />}
-          cursor={{ fill: "var(--chart-gridline)", opacity: 0.4 }}
-        />
-        <Bar dataKey="amount" radius={[0, 4, 4, 0]} maxBarSize={24} isAnimationActive={false}>
+    <ResponsiveContainer width="100%" height={260}>
+      <PieChart>
+        <Pie
+          data={chartData}
+          dataKey="amount"
+          nameKey="label"
+          innerRadius={55}
+          outerRadius={90}
+          paddingAngle={2}
+          isAnimationActive={false}
+        >
           {chartData.map((entry) => (
-            <Cell key={entry.categoryId} fill={entry.color} />
+            <Cell key={entry.categoryId} fill={entry.color} stroke="var(--chart-surface)" />
           ))}
-          <LabelList
-            dataKey="amount"
-            position="right"
-            formatter={(v: unknown) => (v == null ? "" : formatWon(Number(v)))}
-            style={{ fill: "var(--chart-text-primary)", fontSize: 12, fontWeight: 500 }}
-          />
-        </Bar>
-      </BarChart>
+        </Pie>
+        <Tooltip content={<CustomTooltip fx={fx} />} />
+        <Legend
+          formatter={(value: string) => (
+            <span style={{ color: "var(--chart-text-secondary)", fontSize: 12 }}>{value}</span>
+          )}
+        />
+      </PieChart>
     </ResponsiveContainer>
   );
 }
