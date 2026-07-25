@@ -114,7 +114,7 @@ function App() {
           <div className="text-xs tracking-[0.3em]" style={{ color: "var(--ink-soft)" }}>
             KAKEIBO LEDGER
           </div>
-          <h1 className="mt-1 text-3xl font-bold font-ledger">家計簿</h1>
+          <h1 className="mt-1 text-3xl font-bold font-ledger">家計簿(가계부)</h1>
         </div>
         <HankoStamp text={stamp.text} color={stamp.color} />
       </header>
@@ -160,7 +160,7 @@ function App() {
             style={{ borderColor: "var(--rule)", background: "var(--paper-card)" }}
           >
             <h2 className="mb-3 text-sm font-medium" style={{ color: "var(--ink-soft)" }}>
-              カテゴリ別支出
+              カテゴリ別支出(카테고리별 지출)
             </h2>
             <CategoryBarChart data={chartData} fx={fx} />
           </div>
@@ -169,7 +169,7 @@ function App() {
             style={{ borderColor: "var(--rule)", background: "var(--paper-card)" }}
           >
             <h2 className="mb-3 text-sm font-medium" style={{ color: "var(--ink-soft)" }}>
-              月次推移(直近6ヶ月)
+              直近6ヶ月推移(최근 6개월 추이)
             </h2>
             <TrendChart data={trendData} fx={fx} />
           </div>
