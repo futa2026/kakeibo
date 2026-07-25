@@ -6,6 +6,7 @@ interface KakeiboState {
   transactions: Transaction[];
   budgets: Budgets;
   fx: FxRate | null;
+  fxFetchedAt: string | null;
   addTransaction: (t: Omit<Transaction, "id">) => void;
   deleteTransaction: (id: string) => void;
   setBudget: (categoryId: string, amount: number) => void;
@@ -18,6 +19,7 @@ export const useKakeiboStore = create<KakeiboState>()(
       transactions: [],
       budgets: {},
       fx: null,
+      fxFetchedAt: null,
       addTransaction: (t) =>
         set((state) => ({
           transactions: [
@@ -33,7 +35,8 @@ export const useKakeiboStore = create<KakeiboState>()(
         set((state) => ({
           budgets: { ...state.budgets, [categoryId]: amount },
         })),
-      setFx: (fx) => set({ fx }),
+      setFx: (fx) =>
+        set({ fx, fxFetchedAt: new Date().toISOString().slice(0, 10) }),
     }),
     { name: "kakeibo-storage" },
   ),

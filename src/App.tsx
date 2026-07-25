@@ -30,6 +30,7 @@ function App() {
   const transactions = useKakeiboStore((s) => s.transactions);
   const budgets = useKakeiboStore((s) => s.budgets);
   const fx = useKakeiboStore((s) => s.fx);
+  const fxFetchedAt = useKakeiboStore((s) => s.fxFetchedAt);
   const setFx = useKakeiboStore((s) => s.setFx);
 
   const [month, setMonth] = useState(currentMonth());
@@ -51,7 +52,7 @@ function App() {
 
   useEffect(() => {
     const today = new Date().toISOString().slice(0, 10);
-    if (!fx || fx.date !== today) {
+    if (!fx || fxFetchedAt !== today) {
       refreshRate();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
