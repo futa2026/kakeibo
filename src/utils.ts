@@ -15,6 +15,10 @@ export function inMonth(t: Transaction, month: string): boolean {
   return t.date.startsWith(month);
 }
 
+export function formatDateSlash(date: string): string {
+  return date.replaceAll("-", "/"); // YYYY-MM-DD -> YYYY/MM/DD
+}
+
 export function monthLabel(month: string): string {
   const [y, m] = month.split("-").map(Number);
   return `${y}年${m}月`;
@@ -53,6 +57,10 @@ export function formatYen(amount: number): string {
 
 export function formatFxRate(rate: number): string {
   return `¥${rate.toFixed(4)}`;
+}
+
+export function truncateChars(text: string, max: number): string {
+  return text.length > max ? `${text.slice(0, max)}…` : text;
 }
 
 export function sumByCategory(

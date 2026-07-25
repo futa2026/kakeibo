@@ -6,8 +6,8 @@ export const EXPENSE_CATEGORIES: Category[] = [
   { id: "pocketmoney", label: "お小遣い(용돈)", type: "expense", color: "var(--series-3)" },
   { id: "cat", label: "ゴマ(고마)", type: "expense", color: "var(--series-4)" },
   { id: "medical", label: "医療(의료비)", type: "expense", color: "var(--series-5)" },
-  { id: "housing", label: "住居管理費(관리비)", type: "expense", color: "var(--series-6)" },
-  { id: "bankloan", label: "バンクローン(은행 대출)", type: "expense", color: "var(--series-7)" },
+  { id: "housing", label: "住居費(관리비)", type: "expense", color: "var(--series-6)" },
+  { id: "bankloan", label: "ローン(은행 대출)", type: "expense", color: "var(--series-7)" },
   { id: "communication", label: "通信(통신비)", type: "expense", color: "var(--series-8)" },
   { id: "entertainment", label: "娯楽(오락비)", type: "expense", color: "var(--series-9)" },
 ];
@@ -22,4 +22,9 @@ export const ALL_CATEGORIES: Category[] = [...EXPENSE_CATEGORIES, ...INCOME_CATE
 
 export function getCategory(id: string): Category | undefined {
   return ALL_CATEGORIES.find((c) => c.id === id);
+}
+
+export function categoryOrder(id: string): number {
+  const idx = ALL_CATEGORIES.findIndex((c) => c.id === id);
+  return idx === -1 ? ALL_CATEGORIES.length : idx;
 }
