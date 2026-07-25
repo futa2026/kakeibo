@@ -1,4 +1,5 @@
 import type { FxRate } from "./types";
+import { localDateString } from "./utils";
 
 export async function fetchKrwToJpyRate(): Promise<FxRate> {
   const res = await fetch(
@@ -10,5 +11,5 @@ export async function fetchKrwToJpyRate(): Promise<FxRate> {
   if (typeof rate !== "number" || !(rate > 0)) {
     throw new Error("invalid fx response");
   }
-  return { rate, date: data.date ?? new Date().toISOString().slice(0, 10) };
+  return { rate, date: localDateString() };
 }
