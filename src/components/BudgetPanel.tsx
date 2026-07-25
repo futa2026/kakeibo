@@ -47,7 +47,7 @@ export function BudgetPanel({ spentByCategory, fx }: Props) {
                   予算(₩)
                 </span>
                 <input
-                  type="number"
+                  type="text"
                   min="0"
                   inputMode="numeric"
                   value={budget || ""}
