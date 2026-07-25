@@ -88,7 +88,7 @@ export function TransactionForm() {
             ₩金額(금액)
           </label>
           <input
-            type="number"
+            type="text"
             inputMode="numeric"
             min="1"
             placeholder="₩0"
