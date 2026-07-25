@@ -168,7 +168,7 @@ export function TransactionList({ transactions, fx }: Props) {
             return (
               <li
                 key={t.id}
-                className="flex items-center gap-3 py-2.5"
+                className="ledger-row flex items-center gap-3 rounded-md px-1 py-2.5"
                 style={{ borderColor: "var(--rule)" }}
               >
                 <span

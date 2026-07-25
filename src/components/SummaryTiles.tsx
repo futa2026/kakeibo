@@ -24,8 +24,8 @@ export function SummaryTiles({ income, expense, fx }: Props) {
       {tiles.map((tile) => (
         <div
           key={tile.label}
-          className="rounded-xl border p-4"
-          style={{ borderColor: "var(--rule)", background: "var(--paper-card)" }}
+          className="card"
+          style={{ borderTopWidth: "3px", borderTopColor: tile.tone }}
         >
           <div className="text-xs" style={{ color: "var(--ink-soft)" }}>
             {tile.label}

@@ -6,7 +6,7 @@ interface Props {
 export function HankoStamp({ text, color }: Props) {
   return (
     <div
-      className="flex h-16 w-16 shrink-0 items-center justify-center rounded-full text-center font-ledger text-xs font-bold tracking-wide"
+      className="hanko-stamp flex h-16 w-16 shrink-0 items-center justify-center rounded-full text-center font-ledger text-xs font-bold tracking-wide"
       style={{
         border: `3px double ${color}`,
         color,

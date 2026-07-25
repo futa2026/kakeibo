@@ -41,11 +41,7 @@ export function TransactionForm() {
   };
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="rounded-xl border p-4"
-      style={{ borderColor: "var(--rule)", background: "var(--paper-card)" }}
-    >
+    <form onSubmit={handleSubmit} className="card">
       <div className="mb-3 flex gap-2">
         {(["expense", "income"] as const).map((t) => (
           <button
@@ -69,7 +65,7 @@ export function TransactionForm() {
         ))}
       </div>
 
-      <div className="grid grid-cols-2 gap-3 sm:grid-cols-5">
+      <div className="grid grid-cols-2 gap-3 sm:grid-cols-[1fr_1fr_1.6fr_1.4fr_0.7fr]">
         <div className="col-span-1">
           <label className="mb-1 block text-xs" style={{ color: "var(--ink-soft)" }}>
             日付(날짜)
@@ -106,7 +102,7 @@ export function TransactionForm() {
           <select
             value={categoryId}
             onChange={(e) => setCategoryId(e.target.value)}
-            className={inputClass}
+            className={`${inputClass} appearance-none`}
             style={inputStyle}
           >
             {categories.map((c) => (
@@ -131,7 +127,7 @@ export function TransactionForm() {
         </div>
         <button
           type="submit"
-          className="col-span-1 self-end rounded-md py-2 text-sm font-medium text-white"
+          className="col-span-1 self-end rounded-md py-2 text-xs font-medium whitespace-nowrap text-white"
           style={{ background: "var(--series-1)" }}
         >
           記録(기록)

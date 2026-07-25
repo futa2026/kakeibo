@@ -71,6 +71,7 @@
 }
 
 body {
+  position: relative;
   margin: 0;
   background: var(--paper);
   color: var(--ink);
@@ -78,10 +79,124 @@ body {
   font-variant-numeric: normal;
 }
 
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.4;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0.13 0 0 0 0 0.12 0 0 0 0 0.10 0 0 0 0.05 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
 .font-ledger {
   font-family: "Noto Serif JP", serif;
 }
 
 #root {
+  position: relative;
+  z-index: 1;
   min-height: 100svh;
+}
+
+.card {
+  background: var(--paper-card);
+  border: 1px solid var(--rule);
+  border-radius: 12px;
+  padding: 1rem;
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.05),
+    0 10px 24px -16px rgba(0, 0, 0, 0.18);
+}
+
+.section-title {
+  position: relative;
+  padding-left: 14px;
+  font-family: "Noto Serif JP", serif;
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+.section-title::before {
+  content: "";
+  position: absolute;
+  top: 0.15em;
+  bottom: 0.15em;
+  left: 0;
+  width: 3px;
+  border-radius: 2px;
+  background: var(--series-4);
+}
+
+.fold-rule {
+  height: 1px;
+  background: linear-gradient(90deg, var(--rule), transparent 85%);
+}
+
+.fx-dot {
+  display: inline-block;
+  flex-shrink: 0;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}
+
+.link-btn {
+  border: none;
+  background: none;
+  color: var(--series-1);
+  font-size: 0.8125rem;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+.link-btn:disabled {
+  opacity: 0.5;
+  cursor: default;
+  text-decoration: none;
+}
+
+.ledger-input {
+  width: 100%;
+  border: none;
+  border-bottom: 1.5px solid var(--rule);
+  background: transparent;
+  padding: 6px 2px;
+  color: var(--ink);
+  font-size: 0.875rem;
+  outline: none;
+  transition: border-color 0.15s ease;
+}
+.ledger-input:focus {
+  border-bottom-color: var(--series-1);
+}
+
+.ledger-row {
+  transition: background-color 0.15s ease;
+}
+.ledger-row:hover {
+  background: color-mix(in srgb, var(--series-1) 6%, transparent);
+}
+
+.hanko-stamp {
+  box-shadow: inset 0 0 0 1px currentColor;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .hanko-stamp {
+    animation: stampIn 0.5s cubic-bezier(0.2, 1.6, 0.4, 1) both;
+  }
+}
+@keyframes stampIn {
+  0% {
+    opacity: 0;
+    transform: rotate(-8deg) scale(1.6);
+  }
+  60% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+    transform: rotate(-8deg) scale(1);
+  }
 }
